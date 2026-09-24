@@ -11,15 +11,15 @@ echo "========================"
 echo ""
 DISK_THRESHOLD=80
 # Disk Filesystem:
-file=$(df -h / | awk 'NR==2 {print $6}')
-echo "Filesystem: $file"
+FILE=$(df -h / | awk 'NR==2 {print $6}')
+echo "Filesystem: $FILE"
 # Disk Usage:
-disk=$(df -h / | awk 'NR==2 {print $5}' | tr -d '%')
-echo "Disk Usage: $disk%"
+DISK=$(df -h / | awk 'NR==2 {print $5}' | tr -d '%')
+echo "Disk Usage: $DISK%"
 # Disk Threshold:
 echo "Threshold: $DISK_THRESHOLD%"
 echo ""
-if [ "$disk" -lt "$DISK_THRESHOLD" ]; then
+if [ "$DISK" -lt "$DISK_THRESHOLD" ]; then
     echo "========================"
     echo "DISK STATUS: HEALTHY"
     echo "========================"
