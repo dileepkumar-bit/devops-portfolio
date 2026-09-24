@@ -10,6 +10,8 @@
 echo "==============================================="
 echo "LINUX SYSTEM HEALTH CHECK"
 echo "==============================================="
+MEMORY_THRESHOLD=80
+DISK_THRESHOLD=80
 
 # hostname:
 echo ""
@@ -25,10 +27,10 @@ echo ""
 memory=$(free -h | awk '/Mem:/ {printf "%.0f", $3/$2*100}')
 echo "Memory usage: $memory%"
 # disk space:
-disk=$(df -h | awk 'NR==2 {gsub("%","",$5); print $5}')
+disk=$(df -h / | awk 'NR==2 {gsub("%","",$5); print $5}')
 echo "Disk Space: $disk%"
 echo ""
-if [ "$memory" -lt 80 ] && [ "$disk" -lt 80 ]; then
+if [ "$memory" -lt "$MEMORY_THRESHOLD" ] && [ "$disk" -lt "$DISK_THRESHOLD" ]; then
     echo "========================"
     echo "SYSTEM HEALTH: HEALTHY"
     echo "========================"
@@ -37,4 +39,3 @@ else
     echo "SYSTEM HEALTH: UNHEALTHY"
     echo "========================="
 fi
-
