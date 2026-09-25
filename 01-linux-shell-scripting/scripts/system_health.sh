@@ -9,9 +9,8 @@
 echo "================================="
 echo "LINUX SYSTEM HEALTH CHECK"
 echo "================================="
-MEMORY_THRESHOLD=80
-DISK_THRESHOLD=80
-
+#Source
+source "$(dirname "$0")/../config/monitor.conf"
 # hostname:
 echo ""
 host=$(hostname)
