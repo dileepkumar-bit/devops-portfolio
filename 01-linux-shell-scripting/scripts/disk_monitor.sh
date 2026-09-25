@@ -9,16 +9,20 @@ echo "========================"
 echo "DISK SPACE MONITOR"
 echo "========================"
 echo ""
-DISK_THRESHOLD=80
-# Check Disk Filesystem:
+#central configuration file
+source "$(dirname "$0")/../config/monitor.conf"
+
+# Check Disk Filesystem
 FILE=$(df -h / | awk 'NR==2 {print $6}')
 echo "Filesystem: $FILE"
-# Check Disk Usage:
+
+# Check Disk Usage
 DISK=$(df -h / | awk 'NR==2 {print $5}' | tr -d '%')
 echo "Disk Usage: $DISK%"
-# Disk Threshold:
+# Disk Threshold
 echo "Threshold: $DISK_THRESHOLD%"
 echo ""
+
 #Check Disk Status:
 if [ "$DISK" -lt "$DISK_THRESHOLD" ]; then
     echo "========================"
