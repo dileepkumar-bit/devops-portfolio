@@ -6,16 +6,16 @@
 #Script: Log_Monitor
 ##############################
 ##############################
-echo "================================="
+echo "========================"
 echo "LOG MONITOR"
-echo "================================="
-
+echo "========================"
+#Checking error count:
 ERROR_COUNT=$(grep -ic "error" /var/log/syslog)
 #Log file:
 echo "Log File: /var/log/syslog"
 #Log error count:
 echo "ERROR Count: $ERROR_COUNT"
-
+#Log status:
 if [ "$ERROR_COUNT" -eq 0 ]; then
     echo "==================="
     echo "LOG STATUS: HEALTHY"
