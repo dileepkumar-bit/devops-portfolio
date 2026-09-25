@@ -1,0 +1,41 @@
+#========EXECUTION-1============= 
+
+=================================
+SYSTEM BACKUP
+=================================
+
+Source: /home/ubuntu/app
+Backup Directory: /home/ubuntu/backups
+Backup File: app_backup_2026-09-25_13-10-01.tar.gz
+
+====================================
+BACKUP STATUS: SUCCESS
+====================================
+
+#========EXECUTION-2================ 
+
+====================================
+SYSTEM BACKUP
+====================================
+
+Source: /home/ubuntu/app
+Backup Directory: /home/ubuntu/backups
+Backup File: app_backup_2026-09-25_13-15-02.tar.gz
+
+======================================
+BACKUP STATUS: SUCCESS
+=======================================
+
+#========EXECUTION-3===================
+
+=======================================
+SYSTEM BACKUP
+=======================================
+
+Source: /home/ubuntu/app
+Backup Directory: /home/ubuntu/backups
+Backup File: app_backup_2026-09-25_13-20-01.tar.gz
+
+=========================================
+BACKUP STATUS: SUCCESS
+=========================================
