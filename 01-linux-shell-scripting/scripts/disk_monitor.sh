@@ -19,6 +19,7 @@ echo "Disk Usage: $DISK%"
 # Disk Threshold:
 echo "Threshold: $DISK_THRESHOLD%"
 echo ""
+#Disk Status:
 if [ "$DISK" -lt "$DISK_THRESHOLD" ]; then
     echo "========================"
     echo "DISK STATUS: HEALTHY"
