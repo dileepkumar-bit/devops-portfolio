@@ -9,9 +9,9 @@
 # central configuration file
 source "$(dirname "$0")/../config/monitor.conf"
 
-echo "==============================================="
+echo "==========================="
 echo "SYSTEM BACKUP"
-echo "==============================================="
+echo "==========================="
 echo
 
 # Check source directory
