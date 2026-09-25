@@ -6,9 +6,8 @@
 ##############################
 ##############################
 
-# Configurable directories
-SOURCE_DIR="/home/ubuntu/app"
-BACKUP_DIR="/home/ubuntu/backups"
+# central configuration file
+source "$(dirname "$0")/../config/monitor.conf"
 
 echo "==============================================="
 echo "SYSTEM BACKUP"
