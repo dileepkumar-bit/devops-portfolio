@@ -29,8 +29,10 @@ if [ "$DISK" -lt "$DISK_THRESHOLD" ]; then
     echo "========================"
     echo "DISK STATUS: HEALTHY"
     echo "========================"
+    exit 0 
 else
     echo "========================="
     echo "DISK STATUS: WARNING"
     echo "========================="
+    exit 1
 fi
