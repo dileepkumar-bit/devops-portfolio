@@ -1,27 +1,41 @@
 #!/bin/bash
+
 ##############################
 ##############################
-#Author: Dileep
-#Script: service_monitor
+# Author: Dileep
+# Script: service_monitor
 ##############################
 ##############################
-echo "========================"
-echo "SERVICE MONITOR"
-echo "========================"
-echo ""
+
+echo "==========================="
+echo "     SERVICE MONITOR"
+echo "==========================="
+echo 
+
+# Configurable service name
 SERVICE_NAME="$1"
-#Service Name:
+
+# Validate service name 
+if [ -z "$SERVICE_NAME" ]; then 
+  echo "ERROR: Service name is required."
+  echo "Usage: $0 <service-name>" 
+  exit 2 
+fi
+
 echo "Service: $SERVICE_NAME"
-#Service status:
+
+# Check service status
 STATUS=$(systemctl is-active "$SERVICE_NAME")
-echo ""
 echo "status: $STATUS"
+echo 
 if [ "$STATUS" = "active" ]; then
     echo "======================="
     echo "SERVICE STATUS: RUNNING"
     echo "======================="
+    exit 0
 else
     echo "======================="
     echo "SERVICE STATUS: STOPPED"
     echo "======================="
+    exit 1
 fi
