@@ -198,8 +198,8 @@ Hostname: ip-172-16-0-220
 Uptime:  10 min
 CPU load: 0.03, 0.02, 0.00
 
-Memory usage: 39%
-Disk space: 29%
+Memory Usage: 39%
+Disk Space: 29%
 
 ========================
 SYSTEM HEALTH: HEALTHY
@@ -249,11 +249,11 @@ echo
 
 # Memory usage
 MEMORY=$(free -h | awk '/Mem:/ {printf "%.0f", $3/$2*100}')
-echo "Memory usage: $MEMORY%"
+echo "Memory Usage: $MEMORY%"
 
 # Disk space
 DISK=$(df -h / | awk 'NR==2 {gsub("%","",$5); print $5}')
-echo "Disk space: $DISK%"
+echo "Disk Space: $DISK%"
 echo 
 
 # Check system health
@@ -292,7 +292,7 @@ Focuses solely on root filesystem usage and compares it against `DISK_THRESHOLD`
 ========================
 
 Filesystem: /
-Disk usage: 29%
+Disk Usage: 29%
 Threshold: 80%
 
 ========================
@@ -334,7 +334,7 @@ echo "Filesystem: $FILE"
 
 # Disk usage
 DISK=$(df -h / | awk 'NR==2 {print $5}' | tr -d '%')
-echo "Disk usage: $DISK%"
+echo "Disk Usage: $DISK%"
 # Disk Threshold
 echo "Threshold: $DISK_THRESHOLD%"
 echo 
@@ -726,14 +726,14 @@ All five scripts were run manually and validated end-to-end:
 
 System health
 ```text
-Memory usage: 39%
-Disk space: 29%
+Memory Usage: 39%
+Disk Space: 29%
 SYSTEM HEALTH: HEALTHY
 ```
 
 Disk monitoring
 ```text
-Disk usage: 29%
+Disk Usage: 29%
 Threshold: 80%
 DISK STATUS: HEALTHY
 ```
@@ -808,10 +808,10 @@ Terminal captures for each script are stored in `screenshots/` and reproduced be
 ![Disk space monitor output](screenshots/Disk-Space-Moniter.png)
 
 ### 🔍 Service Monitor
-![Service monitor output](screenshots/Service_Monitor.png)
+![Service monitor output](screenshots/Service-Monitor.png)
 
 ### 📜 Log Monitor
-![Log monitor output](screenshots/Log_Monitor.png)
+![Log monitor output](screenshots/Log-Monitor.png)
 
 ### 🗄️ System Backup
 ![System backup output](screenshots/System-Backup.png)
