@@ -17,7 +17,7 @@
 
 - [Project Overview](#-project-overview)
 - [Objectives](#-objectives)
-- [Technology Stack](#-technology-stack)
+- [Technology Stack](#technology-stack)
 - [Project Structure](#-project-structure)
 - [Prerequisites](#-prerequisites)
 - [Getting Started](#-getting-started)
@@ -73,7 +73,7 @@ All scripts were written, tested, and documented on **Ubuntu Linux**.
 - Maintain reusable configuration instead of hard-coding values.
 - Capture execution evidence through logs and screenshots.
 
-## Technology Stack
+## 🛠️ Technology Stack
 
 | Technology | Purpose |
 |---|---|
