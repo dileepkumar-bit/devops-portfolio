@@ -28,7 +28,7 @@ echo
 
 # Memory usage
 MEMORY=$(free -h | awk '/Mem:/ {printf "%.0f", $3/$2*100}')
-echo "Memory usage: $MEMORY%"
+echo "Memory Usage: $MEMORY%"
 
 # Disk space
 DISK=$(df -h / | awk 'NR==2 {gsub("%","",$5); print $5}')
