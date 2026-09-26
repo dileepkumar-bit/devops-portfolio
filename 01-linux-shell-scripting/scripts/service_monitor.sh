@@ -26,7 +26,7 @@ echo "Service: $SERVICE_NAME"
 
 # Check service status
 STATUS=$(systemctl is-active "$SERVICE_NAME")
-echo "status: $STATUS"
+echo "Status: $STATUS"
 echo 
 if [ "$STATUS" = "active" ]; then
     echo "======================="
