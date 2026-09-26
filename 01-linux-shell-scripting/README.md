@@ -467,7 +467,7 @@ Scans `/var/log/syslog` for lines matching `error` (case-insensitive) and report
       LOG MONITOR
 ========================
 Log File: /var/log/syslog
-Error Count: 126
+Error Count: 138
 
 =====================
 LOG STATUS: WARNING
@@ -747,7 +747,7 @@ SERVICE STATUS: RUNNING
 
 Log monitoring
 ```text
-Error Count: 126
+Error Count: 138
 LOG STATUS: WARNING
 ```
 A `WARNING` here is an expected, healthy result for the *monitor* — it means the script correctly found and counted matching entries in `/var/log/syslog`, not that the toolkit is broken.
