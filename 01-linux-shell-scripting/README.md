@@ -36,7 +36,7 @@
 - [Screenshots](#-screenshots)
 - [Key DevOps Concepts Demonstrated](#-key-devops-concepts-demonstrated)
 - [Interview Preparation](#-interview-preparation)
-- [Known Limitations](#%EF%B8%8F--known-limitations)
+- [Known Limitations](https://github.com/dileepkumar-bit/devops-portfolio/blob/main/01-linux-shell-scripting/README.md#%EF%B8%8F--known-limitations)
 - [Future Improvements](#-future-improvements)
 - [Project Status](#-project-status)
 - [Author](#%EF%B8%8F--author)
