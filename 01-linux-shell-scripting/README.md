@@ -36,7 +36,7 @@
 - [Screenshots](#-screenshots)
 - [Key DevOps Concepts Demonstrated](#-key-devops-concepts-demonstrated)
 - [Interview Preparation](#-interview-preparation)
-- [Known Limitations](#known-limitations)
+- [Known Limitations](#-known-limitations)
 - [Future Improvements](#-future-improvements)
 - [Project Status](#-project-status)
 - [Author](#author)
