@@ -18,7 +18,7 @@ ERROR_COUNT=$(grep -ic "error" /var/log/syslog)
 echo "Log File: /var/log/syslog"
 
 # Log error count
-echo "ERROR Count: $ERROR_COUNT"
+echo "Error Count: $ERROR_COUNT"
 
 # check Log status
 if [ "$ERROR_COUNT" -eq 0 ]; then
