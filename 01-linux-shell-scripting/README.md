@@ -871,7 +871,8 @@ Thresholds and paths are defined once in `config/monitor.conf`, and every script
 **How would you troubleshoot a failed scheduled job?**
 Confirm the job exists (`crontab -l`), check its log output, run the exact same command manually to reproduce the failure, and double-check file paths and permissions — Cron runs with a minimal `PATH` and no shell profile loaded, which is a common source of "works manually, fails under Cron" bugs.
 
-## ⚠️ Known Limitations
+<a id="known-limitations"></a>
+## 🚧 Known Limitations
 
 - `system_health.sh` and `log_monitor.sh` always exit `0`, even when they report UNHEALTHY or WARNING — they don't yet signal failure to Cron, CI, or `$?`-based checks.
 - Uptime is parsed with `awk -F'up |,'`, which assumes the standard `uptime` output format (e.g. `up 10 min,`); a different locale, `uptime` version, or an uptime measured in hours/days can shift the field.
