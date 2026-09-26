@@ -196,10 +196,10 @@ Prints one consolidated snapshot of server health and classifies it as HEALTHY o
 
 Hostname: ip-172-16-0-220
 Uptime:  10 min
-CPU Load: 0.03, 0.02, 0.00
+CPU load: 0.03, 0.02, 0.00
 
 Memory usage: 39%
-Disk Space: 29%
+Disk space: 29%
 
 ========================
 SYSTEM HEALTH: HEALTHY
@@ -244,7 +244,7 @@ echo "Hostname: $HOST"
 TIME=$(uptime | awk -F'up |,' '{print $2}')
 LOAD=$(uptime | awk -F'load average: ' '{print $2}')
 echo "Uptime: $TIME"
-echo "CPU Load: $LOAD"
+echo "CPU load: $LOAD"
 echo
 
 # Memory usage
@@ -253,10 +253,10 @@ echo "Memory usage: $MEMORY%"
 
 # Disk space
 DISK=$(df -h / | awk 'NR==2 {gsub("%","",$5); print $5}')
-echo "Disk Space: $DISK%"
+echo "Disk space: $DISK%"
 echo 
 
-# Check system_health
+# Check system health
 if [ "$MEMORY" -lt "$MEMORY_THRESHOLD" ] && [ "$DISK" -lt "$DISK_THRESHOLD" ]; then
     echo "========================"
     echo "SYSTEM HEALTH: HEALTHY"
@@ -292,7 +292,7 @@ Focuses solely on root filesystem usage and compares it against `DISK_THRESHOLD`
 ========================
 
 Filesystem: /
-Disk Usage: 29%
+Disk usage: 29%
 Threshold: 80%
 
 ========================
@@ -334,7 +334,7 @@ echo "Filesystem: $FILE"
 
 # Disk usage
 DISK=$(df -h / | awk 'NR==2 {print $5}' | tr -d '%')
-echo "Disk Usage: $DISK%"
+echo "Disk usage: $DISK%"
 # Disk Threshold
 echo "Threshold: $DISK_THRESHOLD%"
 echo 
@@ -377,7 +377,7 @@ Checks whether a given `systemd` service is active. The service name is a comman
 ===========================
 
 Service: ssh
-status: active
+Status: active
 
 =======================
 SERVICE STATUS: RUNNING
@@ -431,7 +431,7 @@ echo "Service: $SERVICE_NAME"
 
 # Check service status
 STATUS=$(systemctl is-active "$SERVICE_NAME")
-echo "status: $STATUS"
+echo "Status: $STATUS"
 echo 
 if [ "$STATUS" = "active" ]; then
     echo "======================="
@@ -467,7 +467,7 @@ Scans `/var/log/syslog` for lines matching `error` (case-insensitive) and report
       LOG MONITOR
 ========================
 Log File: /var/log/syslog
-ERROR Count: 126
+Error Count: 126
 
 =====================
 LOG STATUS: WARNING
@@ -509,7 +509,7 @@ ERROR_COUNT=$(grep -ic "error" /var/log/syslog)
 echo "Log File: /var/log/syslog"
 
 # Log error count
-echo "ERROR Count: $ERROR_COUNT"
+echo "Error Count: $ERROR_COUNT"
 
 # check Log status
 if [ "$ERROR_COUNT" -eq 0 ]; then
@@ -727,13 +727,13 @@ All five scripts were run manually and validated end-to-end:
 System health
 ```text
 Memory usage: 39%
-Disk Space: 29%
+Disk space: 29%
 SYSTEM HEALTH: HEALTHY
 ```
 
 Disk monitoring
 ```text
-Disk Usage: 29%
+Disk usage: 29%
 Threshold: 80%
 DISK STATUS: HEALTHY
 ```
@@ -741,13 +741,13 @@ DISK STATUS: HEALTHY
 Service monitoring
 ```text
 Service: ssh
-status: active
+Status: active
 SERVICE STATUS: RUNNING
 ```
 
 Log monitoring
 ```text
-ERROR Count: 126
+Error Count: 126
 LOG STATUS: WARNING
 ```
 A `WARNING` here is an expected, healthy result for the *monitor* — it means the script correctly found and counted matching entries in `/var/log/syslog`, not that the toolkit is broken.
@@ -762,7 +762,7 @@ BACKUP STATUS: SUCCESS
 ### Service status logic didn't match on "active"
 **Symptom:** an active SSH service was still reported as stopped:
 ```text
-status: active
+Status: active
 SERVICE STATUS: STOPPED
 ```
 **Cause:** the conditional wasn't doing an explicit string comparison against `"active"`.
@@ -772,7 +772,7 @@ if [ "$status" = "active" ]
 ```
 After the fix:
 ```text
-status: active
+Status: active
 SERVICE STATUS: RUNNING
 ```
 **Takeaway:** validate both the raw command output *and* the script's conditional logic — a script can print the right data and still branch on it incorrectly.
