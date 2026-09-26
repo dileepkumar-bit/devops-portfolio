@@ -8,13 +8,13 @@
 ##############################
 
 echo "========================"
-echo "LOG MONITOR"
+echo "      LOG MONITOR"
 echo "========================"
 
 # Checking error count
 ERROR_COUNT=$(grep -ic "error" /var/log/syslog)
 
-#Log file
+# Log file
 echo "Log File: /var/log/syslog"
 
 # Log error count
