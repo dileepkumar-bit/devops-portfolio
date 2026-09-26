@@ -1,29 +1,30 @@
 #!/bin/bash
 ##############################
 ##############################
-#Author: Dileep
-#Script: Disk Space Monitor
+# Author: Dileep
+# Script: Disk Space Monitor
 ##############################
 ##############################
 echo "========================"
-echo "DISK SPACE MONITOR"
+echo "   DISK SPACE MONITOR"
 echo "========================"
-echo ""
+echo 
+
 #central configuration file
 source "$(dirname "$0")/../config/monitor.conf"
 
-# Check Disk Filesystem
+# Check disk filesystem
 FILE=$(df -h / | awk 'NR==2 {print $6}')
 echo "Filesystem: $FILE"
 
-# Check Disk Usage
+# Disk usage
 DISK=$(df -h / | awk 'NR==2 {print $5}' | tr -d '%')
 echo "Disk Usage: $DISK%"
 # Disk Threshold
 echo "Threshold: $DISK_THRESHOLD%"
-echo ""
+echo 
 
-#Check Disk Status:
+# Disk Status
 if [ "$DISK" -lt "$DISK_THRESHOLD" ]; then
     echo "========================"
     echo "DISK STATUS: HEALTHY"
