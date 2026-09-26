@@ -10,7 +10,7 @@
 source "$(dirname "$0")/../config/monitor.conf"
 
 echo "==========================="
-echo "SYSTEM BACKUP"
+echo "       SYSTEM BACKUP"
 echo "==========================="
 echo
 
