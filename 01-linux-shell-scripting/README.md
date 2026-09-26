@@ -21,13 +21,13 @@
 - [Project Structure](#-project-structure)
 - [Prerequisites](#-prerequisites)
 - [Getting Started](#-getting-started)
-- [Configuration](#-configuration)
+- [Configuration](#configuration)
 - [Scripts](#-scripts)
   - [System Health Monitoring](#-system-health-monitoring)
   - [Disk Space Monitoring](#-disk-space-monitoring)
   - [Service Monitoring](#-service-monitoring)
   - [Log Monitoring](#-log-monitoring)
-  - [Automated Backup](#-automated-backup)
+  - [Automated Backup](#automated-backup)
 - [Exit Codes Reference](#-exit-codes-reference)
 - [Automation with Cron](#-automation-with-cron)
 - [Logging](#-logging)
@@ -39,7 +39,7 @@
 - [Known Limitations](#-known-limitations)
 - [Future Improvements](#-future-improvements)
 - [Project Status](#-project-status)
-- [Author](#-author)
+- [Author](#author)
 - [License](#-license)
 
 ---
@@ -73,7 +73,7 @@ All scripts were written, tested, and documented on **Ubuntu Linux**.
 - Maintain reusable configuration instead of hard-coding values.
 - Capture execution evidence through logs and screenshots.
 
-<a id="Technology Stack"></a>
+<a id="technology-stack"></a>
 ## 🛠️ Technology Stack
 
 | Technology | Purpose |
@@ -150,7 +150,7 @@ nano config/monitor.conf
 
 Each script prints a banner, its findings, and a final status line, then exits (see [Exit Codes Reference](#-exit-codes-reference)).
 
-<a id="Configuration"></a>
+<a id="configuration"></a>
 ## ⚙️ Configuration
 
 Shared values live in `config/monitor.conf` instead of being duplicated across scripts:
@@ -529,7 +529,7 @@ fi
 
 ---
 
-<a id="Automated Backup"></a>
+<a id="automated-backup"></a>
 ### 🗄️ Automated Backup
 
 **File:** `scripts/backup.sh`
@@ -899,7 +899,7 @@ Confirm the job exists (`crontab -l`), check its log output, run the exact same 
 
 **Status: Completed.** The core toolkit — five scripts, centralized configuration, Cron automation, and documentation — is implemented, manually tested, and documented, with the items above tracked as possible next steps rather than blockers.
 
-<a id="Author"></a>
+<a id="author"></a>
 ## 🧑‍💻 Author
 
 **Dileep** — [@dileepkumar-bit](https://github.com/dileepkumar-bit) on GitHub
