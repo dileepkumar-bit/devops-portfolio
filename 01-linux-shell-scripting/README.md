@@ -169,7 +169,7 @@ BACKUP_DIR="/home/ubuntu/backups"
 | `SOURCE_DIR` | `backup.sh` | Directory that gets archived | `/home/ubuntu/app` |
 | `BACKUP_DIR` | `backup.sh` | Directory where `.tar.gz` archives are written | `/home/ubuntu/backups` |
 
-> `service_monitor.sh` doesn't read this file — the service name comes from its command-line argument. `log_monitor.sh` also doesn't read it — its log path and search pattern are currently hard-coded (see [Known Limitations](#-known-limitations)).
+> `service_monitor.sh` doesn't read this file — the service name comes from its command-line argument. `log_monitor.sh` also doesn't read it — its log path and search pattern are currently hard-coded (see [Known Limitations](#known-limitations)).
 
 Cron's schedule is documented separately in `config/cronjobs.conf` (see [Automation with Cron](#-automation-with-cron)).
 
@@ -215,7 +215,7 @@ SYSTEM HEALTH: UNHEALTHY
 =========================
 ```
 
-**Exit status:** always `0`, regardless of the reported status — see [Known Limitations](#-known-limitations).
+**Exit status:** always `0`, regardless of the reported status — see [Known Limitations](#known-limitations).
 
 <details>
 <summary>View full source — <code>scripts/system_health.sh</code></summary>
@@ -485,7 +485,7 @@ LOG STATUS: HEALTHY
 
 > The exact count depends on the system and how recently the log was rotated — a non-zero count is a normal, expected result on most active servers, not necessarily a sign of a real problem.
 
-**Exit status:** always `0` — see [Known Limitations](#-known-limitations).
+**Exit status:** always `0` — see [Known Limitations](#known-limitations).
 
 <details>
 <summary>View full source — <code>scripts/log_monitor.sh</code></summary>
@@ -637,10 +637,10 @@ fi
 
 | Script | `0` | `1` | `2` |
 |---|---|---|---|
-| `system_health.sh` | Always (see [Known Limitations](#-known-limitations)) | — | — |
+| `system_health.sh` | Always (see [Known Limitations](#known-limitations)) | — | — |
 | `disk_monitor.sh` | Usage below threshold | Usage at/above threshold | — |
 | `service_monitor.sh` | Service is active | Service is not active | No service name argument supplied |
-| `log_monitor.sh` | Always (see [Known Limitations](#-known-limitations)) | — | — |
+| `log_monitor.sh` | Always (see [Known Limitations](#known-limitations)) | — | — |
 | `backup.sh` | Archive created successfully | `SOURCE_DIR` missing, or `tar` failed | — |
 
 A non-zero exit status is what lets Cron, CI, or a wrapping script detect a failed check via `$?` immediately after the command runs.
