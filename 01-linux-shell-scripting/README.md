@@ -17,17 +17,17 @@
 
 - [Project Overview](#-project-overview)
 - [Objectives](#-objectives)
-- [Technology Stack](#technology-stack)
+- [Technology Stack](#-technology-stack)
 - [Project Structure](#-project-structure)
 - [Prerequisites](#-prerequisites)
 - [Getting Started](#-getting-started)
-- [Configuration](#configuration)
+- [Configuration](#-configuration)
 - [Scripts](#-scripts)
   - [System Health Monitoring](#-system-health-monitoring)
   - [Disk Space Monitoring](#-disk-space-monitoring)
   - [Service Monitoring](#-service-monitoring)
   - [Log Monitoring](#-log-monitoring)
-  - [Automated Backup](#automated-backup)
+  - [Automated Backup](#-automated-backup)
 - [Exit Codes Reference](#-exit-codes-reference)
 - [Automation with Cron](#-automation-with-cron)
 - [Logging](#-logging)
@@ -39,7 +39,7 @@
 - [Known Limitations](#-known-limitations)
 - [Future Improvements](#-future-improvements)
 - [Project Status](#-project-status)
-- [Author](#author)
+- [Author](#-author)
 - [License](#-license)
 
 ---
@@ -73,7 +73,8 @@ All scripts were written, tested, and documented on **Ubuntu Linux**.
 - Maintain reusable configuration instead of hard-coding values.
 - Capture execution evidence through logs and screenshots.
 
-## Technology Stack
+<a id="Technology Stack"></a>
+## 🛠️ Technology Stack
 
 | Technology | Purpose |
 |---|---|
@@ -149,7 +150,8 @@ nano config/monitor.conf
 
 Each script prints a banner, its findings, and a final status line, then exits (see [Exit Codes Reference](#-exit-codes-reference)).
 
-## Configuration
+<a id="Configuration"></a>
+## ⚙️ Configuration
 
 Shared values live in `config/monitor.conf` instead of being duplicated across scripts:
 
@@ -527,7 +529,8 @@ fi
 
 ---
 
-### Automated Backup
+<a id="Automated Backup"></a>
+### 🗄️ Automated Backup
 
 **File:** `scripts/backup.sh`
 
@@ -872,7 +875,7 @@ Thresholds and paths are defined once in `config/monitor.conf`, and every script
 Confirm the job exists (`crontab -l`), check its log output, run the exact same command manually to reproduce the failure, and double-check file paths and permissions — Cron runs with a minimal `PATH` and no shell profile loaded, which is a common source of "works manually, fails under Cron" bugs.
 
 <a id="known-limitations"></a>
-## 🚧 Known Limitations
+## ⚠️ Known Limitations
 
 - `system_health.sh` and `log_monitor.sh` always exit `0`, even when they report UNHEALTHY or WARNING — they don't yet signal failure to Cron, CI, or `$?`-based checks.
 - Uptime is parsed with `awk -F'up |,'`, which assumes the standard `uptime` output format (e.g. `up 10 min,`); a different locale, `uptime` version, or an uptime measured in hours/days can shift the field.
@@ -896,7 +899,8 @@ Confirm the job exists (`crontab -l`), check its log output, run the exact same 
 
 **Status: Completed.** The core toolkit — five scripts, centralized configuration, Cron automation, and documentation — is implemented, manually tested, and documented, with the items above tracked as possible next steps rather than blockers.
 
-## Author
+<a id="Author"></a>
+## 🧑‍💻 Author
 
 **Dileep** — [@dileepkumar-bit](https://github.com/dileepkumar-bit) on GitHub
 Part of the [`devops-portfolio`](https://github.com/dileepkumar-bit/devops-portfolio) series of hands-on infrastructure projects.
