@@ -1,0 +1,4 @@
+# Send only the WAR to the Docker build context.
+# Do NOT add *.war here: the Dockerfile COPYs myapp.war.
+*
+!myapp.war
