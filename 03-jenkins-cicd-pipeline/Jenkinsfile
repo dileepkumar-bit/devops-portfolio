@@ -1,0 +1,139 @@
+pipeline {
+    agent any
+
+    options {
+        timestamps()
+        skipDefaultCheckout(true)
+        disableConcurrentBuilds()
+    }
+
+    environment {
+        APP_REPO       = 'https://github.com/dileepkumar-bit/java_project_disneyhotstart-main.git'
+        IMAGE_NAME     = 'disney-java-app'
+        CONTAINER_NAME = 'disney-app-ci'
+        HOST_PORT      = '8081'
+    }
+
+    stages {
+
+        stage('Checkout CI Repository') {
+            steps {
+                checkout scm
+            }
+        }
+
+        stage('Checkout Application') {
+            steps {
+                dir('app-source') {
+                    git branch: 'main', url: "${APP_REPO}"
+                }
+            }
+        }
+
+        stage('Maven Build & Test') {
+            steps {
+                dir('app-source') {
+                    sh 'mvn clean package'
+                }
+            }
+        }
+
+        stage('Verify WAR') {
+            steps {
+                sh '''
+                    test -f app-source/target/myapp.war
+
+                    echo "WAR file verified:"
+                    ls -lh app-source/target/myapp.war
+                '''
+            }
+        }
+
+        stage('Prepare Docker Context') {
+            steps {
+                sh '''
+                    rm -rf docker-context
+                    mkdir -p docker-context
+
+                    cp app-source/target/myapp.war docker-context/
+                    cp 02-docker-application/Dockerfile docker-context/
+                    cp 02-docker-application/.dockerignore docker-context/
+
+                    echo "Docker build context:"
+                    ls -lah docker-context/
+                '''
+            }
+        }
+
+        stage('Docker Build') {
+            steps {
+                sh '''
+                    docker build \
+                        -t ${IMAGE_NAME}:${BUILD_NUMBER} \
+                        docker-context
+                '''
+            }
+        }
+
+        stage('Verify Docker Image') {
+            steps {
+                sh '''
+                    docker image inspect ${IMAGE_NAME}:${BUILD_NUMBER} >/dev/null
+
+                    echo "Docker image verified:"
+                    docker images ${IMAGE_NAME}
+                '''
+            }
+        }
+
+        stage('Run & Verify Container') {
+            steps {
+                sh '''
+                    docker rm -f ${CONTAINER_NAME} 2>/dev/null || true
+
+                    docker run -d \
+                        --name ${CONTAINER_NAME} \
+                        -p ${HOST_PORT}:8080 \
+                        ${IMAGE_NAME}:${BUILD_NUMBER}
+
+                    echo "Waiting for application..."
+
+                    for i in $(seq 1 30); do
+
+                        STATUS=$(curl -s -o /dev/null -w "%{http_code}" \
+                            http://localhost:${HOST_PORT})
+
+                        if [ "$STATUS" = "200" ]; then
+                            echo "Application returned HTTP 200"
+                            exit 0
+                        fi
+
+                        sleep 2
+                    done
+
+                    echo "Application did not return HTTP 200"
+
+                    docker logs ${CONTAINER_NAME}
+
+                    exit 1
+                '''
+            }
+        }
+    }
+
+    post {
+        always {
+
+            archiveArtifacts artifacts: 'app-source/target/myapp.war',
+                             fingerprint: true,
+                             allowEmptyArchive: true
+
+            junit testResults: 'app-source/target/surefire-reports/*.xml',
+                  allowEmptyResults: true
+
+            sh '''
+                docker rm -f ${CONTAINER_NAME} 2>/dev/null || true
+            '''
+        }
+    }
+}
