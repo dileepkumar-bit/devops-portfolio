@@ -45,86 +45,91 @@ One declarative Jenkins pipeline with automated quality gates, and screenshot ev
 ## 📐 Architecture
 
 ```mermaid
-%%{init: {"flowchart": {"curve": "linear", "nodeSpacing": 35, "rankSpacing": 50, "padding": 18, "htmlLabels": false}, "theme": "base", "themeVariables": {"fontFamily": "Arial, sans-serif", "fontSize": "14px"}}}%%
+%%{init: {"flowchart":{"curve":"basis","nodeSpacing":28,"rankSpacing":42,"padding":18,"wrappingWidth":280},"themeVariables":{"fontFamily":"Arial, sans-serif","fontSize":"14px"}}}%%
 flowchart TB
+    JK["⚙️ Jenkins\nPipeline Job\ndisney-java-ci"]
 
-    JK["JENKINS<br/>Pipeline: disney-java-ci"]
-
-    subgraph SRC["SOURCE - GITHUB"]
+    subgraph SRC["📥 SOURCE · GitHub"]
         direction LR
-        S1["1. Checkout CI Repository<br/>Jenkinsfile and Dockerfile"]
-        S2["2. Checkout Application<br/>Java source in app-source/"]
+        S1["1 · Checkout CI repo\nJenkinsfile + Dockerfile"]
+        S2["2 · Checkout application\nJava source → app-source/"]
         S1 --> S2
     end
 
-    subgraph BLD["BUILD AND TEST - MAVEN"]
+    subgraph BLD["🔨 BUILD & TEST · Maven"]
         direction LR
-        B1["3. Build and Test<br/>mvn clean package"]
-        B2{"4. WAR Exists?<br/>myapp.war"}
+        B1["3 · mvn clean package\nCompile · Run 2 tests · Build WAR"]
+        B2{"4 · Verify WAR\nmyapp.war exists?"}
         B1 --> B2
     end
 
-    subgraph PKG["PACKAGE - DOCKER"]
+    subgraph PKG["📦 PACKAGE · Docker"]
         direction LR
-        P1["5. Prepare Build Context<br/>WAR and Dockerfile"]
-        P2["6. Build Docker Image<br/>Tag: BUILD_NUMBER"]
-        P3{"7. Verify Image<br/>docker image inspect"}
+        P1["5 · Prepare context\nWAR + Dockerfile only"]
+        P2["6 · Docker build\nImage tag = BUILD_NUMBER"]
+        P3{"7 · Verify image\ndocker image inspect"}
         P1 --> P2 --> P3
     end
 
-    subgraph RUN["RUN AND VERIFY"]
+    subgraph RUN["🚀 8 · RUN & VERIFY · Docker + curl"]
         direction LR
-        R1["8. Run Container<br/>Host 8081 to Container 8080<br/>Remove stale container first"]
-        R2{"HTTP Status<br/>200 OK?"}
-        R3["SUCCESS<br/>Application Verified"]
-        R4["FAILURE<br/>Check docker ps -a<br/>and docker logs"]
+        R1["docker run\n8081 → 8080\nRemove stale container first"]
+        R2{"HTTP 200?\nPoll every 2 seconds\nMaximum 30 tries"}
+        R3["✅ Verified"]
+        R4["❌ Build fails\ndocker ps -a\n+ docker logs"]
         R1 --> R2
-        R2 -->|Yes| R3
-        R2 -->|No| R4
+        R2 -- "yes" --> R3
+        R2 -- "no" --> R4
     end
 
-    subgraph POST["POST ACTIONS - ALWAYS RUN"]
+    subgraph POST["🧹 9 · POST ACTIONS · Always runs"]
         direction LR
-        Q1["Archive WAR<br/>Fingerprint Artifact"]
-        Q2["Publish JUnit<br/>Test Results"]
-        Q3["Cleanup<br/>Remove disney-app-ci"]
+        Q1["Archive WAR\nFingerprint enabled"]
+        Q2["Publish JUnit\nTest results"]
+        Q3["Remove container\ndisney-app-ci"]
         Q1 --> Q2 --> Q3
     end
 
-    JK --> S1
-    S2 -->|Application Source| B1
-    B2 -->|WAR File| P1
-    P3 -->|Image Built| R1
-    R3 -.->|Pipeline Completion| Q1
-    R4 -.->|Pipeline Completion| Q1
+    JK --> SRC
+    SRC -->|"app-source/"| BLD
+    BLD -->|"myapp.war"| PKG
+    PKG -->|"image tag"| RUN
+    RUN -.->|"always"| POST
 
     classDef jenkins fill:#1E293B,stroke:#94A3B8,stroke-width:2px,color:#FFFFFF
-    classDef source fill:#475569,stroke:#334155,color:#FFFFFF
-    classDef build fill:#2563EB,stroke:#1E40AF,color:#FFFFFF
-    classDef package fill:#4F46E5,stroke:#3730A3,color:#FFFFFF
-    classDef runtime fill:#0F766E,stroke:#115E59,color:#FFFFFF
+    classDef src fill:#475569,stroke:#334155,color:#FFFFFF
+    classDef bld fill:#2563EB,stroke:#1E40AF,color:#FFFFFF
+    classDef pkg fill:#4F46E5,stroke:#3730A3,color:#FFFFFF
+    classDef run fill:#0F766E,stroke:#115E59,color:#FFFFFF
     classDef post fill:#B45309,stroke:#78350F,color:#FFFFFF
-    classDef decision fill:#FFFFFF,stroke:#64748B,stroke-width:2px,color:#111827
-    classDef success fill:#DCFCE7,stroke:#15803D,stroke-width:2px,color:#14532D
-    classDef failure fill:#FEE2E2,stroke:#B91C1C,stroke-width:2px,color:#7F1D1D
+    classDef gateB fill:#FFFFFF,stroke:#2563EB,stroke-width:2px,color:#0F172A
+    classDef gateP fill:#FFFFFF,stroke:#4F46E5,stroke-width:2px,color:#0F172A
+    classDef gateR fill:#FFFFFF,stroke:#0F766E,stroke-width:2px,color:#0F172A
+    classDef ok fill:#DCFCE7,stroke:#15803D,stroke-width:2px,color:#14532D
+    classDef bad fill:#FEE2E2,stroke:#B91C1C,stroke-width:2px,color:#7F1D1D
 
     class JK jenkins
-    class S1,S2 source
-    class B1 build
-    class B2,P3,R2 decision
-    class P1,P2 package
-    class R1 runtime
-    class R3 success
-    class R4 failure
+    class S1,S2 src
+    class B1 bld
+    class B2 gateB
+    class P1,P2 pkg
+    class P3 gateP
+    class R1 run
+    class R2 gateR
+    class R3 ok
+    class R4 bad
     class Q1,Q2,Q3 post
 
-    style SRC fill:#64748B15,stroke:#64748B,stroke-width:1.5px
-    style BLD fill:#2563EB15,stroke:#2563EB,stroke-width:1.5px
-    style PKG fill:#4F46E515,stroke:#4F46E5,stroke-width:1.5px
-    style RUN fill:#0F766E15,stroke:#0F766E,stroke-width:1.5px
-    style POST fill:#B4530915,stroke:#B45309,stroke-width:1.5px
+    style SRC fill:#64748B1f,stroke:#64748B,stroke-width:1.5px
+    style BLD fill:#2563EB1f,stroke:#2563EB,stroke-width:1.5px
+    style PKG fill:#4F46E51f,stroke:#4F46E5,stroke-width:1.5px
+    style RUN fill:#0F766E1f,stroke:#0F766E,stroke-width:1.5px
+    style POST fill:#B453091f,stroke:#B45309,stroke-width:1.5px
 
-    linkStyle default stroke:#64748B,stroke-width:1.5px
+    linkStyle default stroke:#64748B,stroke-width:2px
+    linkStyle 5 stroke:#16A34A,stroke-width:2.5px
+    linkStyle 6 stroke:#DC2626,stroke-width:2.5px
+    linkStyle 13 stroke:#D97706,stroke-width:2px
 ```
 **How to read it:** each colored band is a pipeline phase, and the numbers match the [stage table](#-pipeline-stages) below. The white hexagons are **automated quality gates**: Verify WAR (4), Verify image (7), and the HTTP 200 probe (8). If a check fails, the build stops there and the cause is visible in the Jenkins console. The dashed arrow leads to the post actions, which run whether the build passes or fails, and at whichever stage it stops.
 
