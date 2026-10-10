@@ -45,48 +45,48 @@ One declarative Jenkins pipeline with automated quality gates, and screenshot ev
 ## 📐 Architecture
 
 ```mermaid
-%%{init: {"flowchart":{"curve":"basis","nodeSpacing":28,"rankSpacing":42,"padding":18,"wrappingWidth":280},"themeVariables":{"fontFamily":"Arial, sans-serif","fontSize":"14px"}}}%%
+%%{init: {"flowchart":{"htmlLabels":true,"curve":"basis","nodeSpacing":28,"rankSpacing":48,"padding":20},"themeVariables":{"fontFamily":"Arial, sans-serif","fontSize":"14px"}}}%%
 flowchart TB
-    JK["⚙️ Jenkins\nPipeline Job\ndisney-java-ci"]
+    JK["⚙️ <b>Jenkins</b><br/>Pipeline Job<br/>disney-java-ci"]
 
     subgraph SRC["📥 SOURCE · GitHub"]
         direction LR
-        S1["1 · Checkout CI repo\nJenkinsfile + Dockerfile"]
-        S2["2 · Checkout application\nJava source → app-source/"]
+        S1["<b>1 · Checkout CI repo</b><br/>Jenkinsfile + Dockerfile"]
+        S2["<b>2 · Checkout application</b><br/>Java source → app-source/"]
         S1 --> S2
     end
 
     subgraph BLD["🔨 BUILD & TEST · Maven"]
         direction LR
-        B1["3 · mvn clean package\nCompile · Run 2 tests · Build WAR"]
-        B2{"4 · Verify WAR\nmyapp.war exists?"}
+        B1["<b>3 · mvn clean package</b><br/>Compile · Run 2 tests · Build WAR"]
+        B2{"<b>4 · Verify WAR</b><br/>myapp.war exists?"}
         B1 --> B2
     end
 
     subgraph PKG["📦 PACKAGE · Docker"]
         direction LR
-        P1["5 · Prepare context\nWAR + Dockerfile only"]
-        P2["6 · Docker build\nImage tag = BUILD_NUMBER"]
-        P3{"7 · Verify image\ndocker image inspect"}
+        P1["<b>5 · Prepare context</b><br/>WAR + Dockerfile only"]
+        P2["<b>6 · Docker build</b><br/>Image tag =<br/>BUILD_NUMBER"]
+        P3{"<b>7 · Verify image</b><br/>docker image inspect"}
         P1 --> P2 --> P3
     end
 
-    subgraph RUN["🚀 8 · RUN & VERIFY · Docker + curl"]
+    subgraph RUN["🚀 8 · RUN & VERIFY<br/>Docker + curl"]
         direction LR
-        R1["docker run\n8081 → 8080\nRemove stale container first"]
-        R2{"HTTP 200?\nPoll every 2 seconds\nMaximum 30 tries"}
-        R3["✅ Verified"]
-        R4["❌ Build fails\ndocker ps -a\n+ docker logs"]
+        R1["<b>docker run</b><br/>8081 → 8080<br/>Remove stale container first"]
+        R2{"<b>HTTP 200?</b><br/>Poll every 2 seconds<br/>Maximum 30 tries"}
+        R3["<b>✅ Verified</b>"]
+        R4["<b>❌ Build fails</b><br/>docker ps -a<br/>+ docker logs"]
         R1 --> R2
         R2 -- "yes" --> R3
         R2 -- "no" --> R4
     end
 
-    subgraph POST["🧹 9 · POST ACTIONS · Always runs"]
+    subgraph POST["🧹 9 · POST ACTIONS<br/>Always runs, even on failure"]
         direction LR
-        Q1["Archive WAR\nFingerprint enabled"]
-        Q2["Publish JUnit\nTest results"]
-        Q3["Remove container\ndisney-app-ci"]
+        Q1["<b>Archive WAR</b><br/>Fingerprint enabled"]
+        Q2["<b>Publish JUnit</b><br/>Test results"]
+        Q3["<b>Remove container</b><br/>disney-app-ci"]
         Q1 --> Q2 --> Q3
     end
 
