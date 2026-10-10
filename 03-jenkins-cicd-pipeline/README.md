@@ -49,7 +49,7 @@ One declarative Jenkins pipeline with automated quality gates, and screenshot ev
 flowchart TB
     JK["⚙️ <b>Jenkins</b><br/>pipeline job<br/>disney-java-ci"]
 
-    subgraph SRC["📥 SOURCE ·GitHub"]
+    subgraph SRC["📥 SOURCE · GitHub"]
         direction LR
         S1["<b>1 · Checkout CI repo</b><br/>Jenkinsfile + Dockerfile"]
         S2["<b>2 · Checkout application</b><br/>Java source → app-source/"]
