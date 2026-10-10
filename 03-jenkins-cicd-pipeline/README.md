@@ -58,7 +58,7 @@ flowchart TB
 
     subgraph BLD["🔨 BUILD & TEST · Maven"]
         direction LR
-        B1["<b>3 · mvn clean package</b><br/>compile · 2 tests WAR"]
+        B1["<b>3 · mvn clean package</b><br/>compile · 2 tests . WAR"]
         B2{{"<b>4 · Verify WAR</b><br/>myapp.war exists?"}}
         B1 --> B2
     end
