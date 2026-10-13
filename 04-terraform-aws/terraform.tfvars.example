@@ -1,0 +1,2 @@
+# Replace this placeholder with your public IPv4 address followed by /32.
+allowed_ssh_cidr = "REPLACE_WITH_YOUR_PUBLIC_IP/32"
